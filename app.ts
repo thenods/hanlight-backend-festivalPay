@@ -8,6 +8,7 @@ import * as morgan from 'morgan';
 
 import ErrorMiddleware from '@Middleware/error/errorMiddleware';
 import CustomError from '@Middleware/error/customError';
+import { connect } from 'database';
 
 dotenv.config();
 
@@ -28,14 +29,15 @@ app.use(
   })
 );
 
-/* middlewares */
-
 app.use((req, res, next) => {
   // err.status = 404;
   next(new CustomError({ name: 'Not_Found' }));
 });
 
-app.use(ErrorMiddleware)
+app.use(ErrorMiddleware);
+
+connect({ force: false })
+  .then(() => console.log('데이터베이스가 성공적으로 연결되었습니다.'));
 
 process.on('uncaughtException', err => {
   console.error(err);
