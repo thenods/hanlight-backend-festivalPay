@@ -1,7 +1,6 @@
 import * as http from 'http';
 
 import app from './app';
-import { NODE_SETTING } from '@Lib/constants';
 
 const normalizePort = (val: string): number => {
   const port: number = parseInt(val, 10);
@@ -18,7 +17,7 @@ const normalizePort = (val: string): number => {
 };
 
 const httpServer: http.Server = http.createServer(app);
-const port: number = normalizePort(NODE_SETTING.PORT.toString());
+const port: number = normalizePort(process.env.PORT);
 
 httpServer.listen(
   port,
