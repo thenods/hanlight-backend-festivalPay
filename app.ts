@@ -6,6 +6,9 @@ import * as express from 'express';
 import * as helmet from 'helmet';
 import * as morgan from 'morgan';
 
+import ErrorMiddleware from '@Middleware/error/errorMiddleware';
+import CustomError from '@Middleware/error/customError';
+
 dotenv.config();
 
 const app: express.Application = express();
@@ -26,6 +29,13 @@ app.use(
 );
 
 /* middlewares */
+
+app.use((req, res, next) => {
+  // err.status = 404;
+  next(new CustomError({ name: 'Not_Found' }));
+});
+
+app.use(ErrorMiddleware)
 
 process.on('uncaughtException', err => {
   console.error(err);
