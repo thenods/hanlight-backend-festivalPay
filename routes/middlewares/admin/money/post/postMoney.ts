@@ -15,7 +15,7 @@ const postMoney = async (req: Request, res: Response, next: NextFunction) => {
   const target: HanlightUser = res.locals.targetUser;
   const { amount }: PostMoneyParams['body'] = req.body;
 
-  if (admin.user_pk === target.pk) {
+  if (process.env.NODE_ENV === 'production' && admin.user_pk === target.pk) {
     next(new CustomError({ name: 'Forbidden'}));
 
     return;
