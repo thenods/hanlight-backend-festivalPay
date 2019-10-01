@@ -6,7 +6,10 @@ import {
   Model,
   PrimaryKey,
   Table,
+  HasMany,
 } from 'sequelize-typescript';
+
+import Charge from './charge.model';
 
 @Table({
   timestamps: false,
@@ -41,4 +44,7 @@ export default class Admin extends Model<Admin> {
   @AllowNull(false)
   @Column(DataType.INTEGER)
   public studentNum: number;
+
+  @HasMany(() => Charge)
+  public charge: Charge[];
 }

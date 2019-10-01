@@ -1,14 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 
 import Admin from "@Model/admin.model";
-import User from "@Model/user.model";
 
 import CustomError from "@Middleware/error/customError";
+
+import { HanlightUser } from "@Lib/types";
 
 type type = 'response' | 'middleware'
 
 const checkAdmin = (type: type) => async (req: Request, res: Response, next: NextFunction) => {
-  const { pk }: User = res.locals.user;
+  const { pk }: HanlightUser = res.locals.user;
 
   try {
     const admin: Admin | undefined = await Admin.findOne({ where: { user_pk: pk } });
@@ -21,7 +22,8 @@ const checkAdmin = (type: type) => async (req: Request, res: Response, next: Nex
         },
       });
     } else if (Boolean(admin)) {
-      next(); 
+      res.locals.admin = admin;
+      next();
     } else {
       next(new CustomError({ name: 'Forbidden' }));
     }

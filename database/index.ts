@@ -21,6 +21,7 @@ export const sequelize = new Sequelize({
     charset: 'utf8',
     collate: 'utf8_general_ci',
   },
+  timezone: '+09:00',
 });
 
 export async function connect({force, logging}: {force: boolean, logging?: boolean})  {

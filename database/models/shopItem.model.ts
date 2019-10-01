@@ -12,22 +12,22 @@ import {
 } from 'sequelize-typescript';
 
 import ReceiptItem from './receiptItem.model';
-import Store from './store.model';
+import Shop from './shop.model';
 
 @Table({
   timestamps: false,
 })
-export default class StoreItem extends Model<StoreItem> {
+export default class ShopItem extends Model<ShopItem> {
   @AutoIncrement
   @PrimaryKey
   @AllowNull(false)
   @Column(DataType.INTEGER)
   public pk: number;
 
-  @ForeignKey(() => Store)
+  @ForeignKey(() => Shop)
   @AllowNull(true)
   @Column(DataType.INTEGER)
-  public store_pk: number;
+  public shop_pk: number;
 
   @Column(DataType.STRING)
   public name: string;
@@ -36,10 +36,10 @@ export default class StoreItem extends Model<StoreItem> {
   @Column(DataType.INTEGER)
   public price: number;
 
-  @BelongsTo(() => Store, {
+  @BelongsTo(() => Shop, {
     onDelete: 'CASCADE',
   })
-  public store: Store;
+  public shop: Shop;
 
   @HasMany(() => ReceiptItem)
   public receiptItem: ReceiptItem[];

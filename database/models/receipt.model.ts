@@ -13,7 +13,7 @@ import {
 } from 'sequelize-typescript';
 
 import ReceiptItem from './receiptItem.model';
-import Store from './store.model';
+import Shop from './shop.model';
 import User from './user.model';
 
 @Table({
@@ -31,14 +31,14 @@ export default class Receipt extends Model<Receipt> {
   @Column(DataType.UUID)
   public user_pk: string;
 
-  @ForeignKey(() => Store)
+  @ForeignKey(() => Shop)
   @AllowNull(true)
   @Column(DataType.INTEGER)
-  public store_pk: number;
+  public shop_pk: number;
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  public store_name: string;
+  public shop_name: string;
 
   @AllowNull(false)
   @Column(DataType.INTEGER)
@@ -65,8 +65,8 @@ export default class Receipt extends Model<Receipt> {
   })
   public user: User;
 
-  @BelongsTo(() => Store)
-  public store: Store;
+  @BelongsTo(() => Shop)
+  public shop: Shop;
 
   @HasMany(() => ReceiptItem)
   public receiptItem: ReceiptItem[];
