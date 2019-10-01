@@ -53,8 +53,6 @@ const getPurchase = async (req: Request, res: Response, next: NextFunction) => {
       totalPrice: _.sumBy(item.receiptItem, item => item.totalPrice),
     }));
 
-    console.log(5)
-
     res.json({
       success: true,
       data: {

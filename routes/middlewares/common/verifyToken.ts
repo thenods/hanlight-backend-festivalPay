@@ -39,6 +39,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
       next(new CustomError({ name: 'Wrong_Request' }));
     }
   } catch (error) {
+    console.log(error);
     next(new CustomError({ name: error.response.data.name, message: error.response.data.message }));
   }
 };
