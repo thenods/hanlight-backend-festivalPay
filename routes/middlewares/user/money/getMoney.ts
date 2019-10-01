@@ -25,7 +25,11 @@ const getMoney = async (req: Request, res: Response, next: NextFunction) => {
       data: {
         user: {
           money: user ? user.money : 0,
-          lastApproval: user.changed[0].admin_name
+          lastApproval: user
+            ? user.charge.length
+              ? user.charge[0].admin_name
+              : null
+            : null
         }
       }
     });
