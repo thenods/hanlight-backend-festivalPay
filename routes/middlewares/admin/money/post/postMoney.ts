@@ -13,10 +13,10 @@ import { PostMoneyParams } from "./_validation";
 const postMoney = async (req: Request, res: Response, next: NextFunction) => {
   const admin: Admin = res.locals.admin;
   const target: HanlightUser = res.locals.targetUser;
-  const { amount }: PostMoneyParams['body'] = req.body;
+  const { amount }: PostMoneyParams["body"] = req.body;
 
   if (admin.user_pk === target.pk) {
-    next(new CustomError({ name: 'Forbidden'}));
+    next(new CustomError({ name: "Forbidden" }));
 
     return;
   }
@@ -30,27 +30,27 @@ const postMoney = async (req: Request, res: Response, next: NextFunction) => {
         major: target.major,
         grade: target.grade,
         classNum: target.classNum,
-        studentNum: target.studentNum,
-      },
+        studentNum: target.studentNum
+      }
     });
 
     const charge: Charge = await Charge.create({
       admin_pk: admin.pk,
+      admin_name: admin.name,
       user_pk: target.pk,
       user_name: target.name,
-      amount,
+      amount
     });
 
     res.json({
       success: true,
       data: {
-        charge,
-      },
+        charge
+      }
     });
-    
   } catch (error) {
     console.log(error);
-    next(new CustomError({ name: 'Database_Error' }));
+    next(new CustomError({ name: "Database_Error" }));
   }
 };
 
