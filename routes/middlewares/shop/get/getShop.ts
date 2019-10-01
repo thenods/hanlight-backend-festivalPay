@@ -11,6 +11,14 @@ import CustomError from "@Middleware/error/customError";
 
 import { GetShopRequest, Sort } from "./_validation";
 
+interface ShopResponse {
+  pk: Shop['pk'];
+  className: Shop['className'];
+  name: Shop['name'];
+  location: Shop['location'];
+  shopItem: Shop['shopItem'];
+}
+
 const getShop = async (req: Request, res: Response, next: NextFunction) => {
   const { sort }: GetShopRequest['query'] = req.query;
 
@@ -51,7 +59,7 @@ const getShop = async (req: Request, res: Response, next: NextFunction) => {
       sortedShop = shop;
     } else if (sort === Sort.popular) {
       sortedShop = _.sortBy(shop, (shop: Shop) => 
-      _.reduce(shop.receiptItem, (prevItem, currentItem) => prevItem.count + currentItem.count));
+        _.reduce(shop.receiptItem, (prevItem, currentItem) => prevItem.count + currentItem.count));
     } else {
       sortedShop = _.sortBy(shop, (shop: Shop) => 
         _.reduce(shop.receipt,(prevItem, currentItem) => prevItem.price + currentItem.price));
@@ -62,11 +70,22 @@ const getShop = async (req: Request, res: Response, next: NextFunction) => {
     _.sortedUniq(_.map(sortedShop, (shop: Shop) => shop.location))
       .forEach((location: number) => result[location] = _.filter(sortedShop, (shop: Shop) => shop.location === location));
 
+    const sortedResult: { [location: string]: ShopResponse[] } = {};
+    Object.keys(result).forEach((location: string) => {
+      sortedResult[location] = result[location].map(shop => ({
+        pk: shop.pk,
+        className: shop.className,
+        name: shop.name,
+        location: shop.location,
+        shopItem: shop.shopItem,
+      }));
+    });
+
     res.json({
       success: true,
       data: {
-        shop: result,
-      }
+        shop: sortedResult,
+      },
     });
   } catch (error) {
     console.log(error);
