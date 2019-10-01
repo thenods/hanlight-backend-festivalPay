@@ -10,6 +10,8 @@ import ErrorMiddleware from '@Middleware/error/errorMiddleware';
 import CustomError from '@Middleware/error/customError';
 import { connect } from 'database';
 
+import apiController from '@Controller/apiController';
+
 dotenv.config();
 
 const app: express.Application = express();
@@ -29,8 +31,9 @@ app.use(
   })
 );
 
+app.use('/api', apiController);
+
 app.use((req, res, next) => {
-  // err.status = 404;
   next(new CustomError({ name: 'Not_Found' }));
 });
 
