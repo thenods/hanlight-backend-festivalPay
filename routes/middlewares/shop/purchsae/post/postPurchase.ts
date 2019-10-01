@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { sequelize } from "database";
+import { sequelize } from "@Database/index";
 import * as _ from 'lodash';
 import { Transaction } from 'sequelize';
 

@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as _ from 'lodash';
 
-import Receipt from "@Model/receipt.model";
 import ReceiptItem from "@Model/receiptItem.model";
 import Shop from "@Model/shop.model";
 import ShopItem from "@Model/shopItem.model";
@@ -42,7 +41,13 @@ const getPurchase = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     if (!shop) {
-      next(new CustomError({ name: 'Not_Found' }));
+      res.json({
+        success: true,
+        data: {
+          items: [],
+          totalPrice: 0,
+        },
+      });
 
       return;
     }

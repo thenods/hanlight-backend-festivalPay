@@ -6,7 +6,8 @@
         "@Controller/*": ["routes/controllers/*"],
         "@Middleware/*": ["routes/middlewares/*"],
         "@Model/*": ["database/models/*"],
-        "@Lib/*": ["lib/*"]
+        "@Lib/*": ["lib/*"],
+        "@Database/*": ["database/*"]
       },
       "lib": ["esnext"],
       "target": "esnext",
