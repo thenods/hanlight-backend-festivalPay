@@ -21,7 +21,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     if (authorization) {
-      const response: AxiosResponse<VerifyToken> = await axiosInstance.get('/user', {
+      const response: AxiosResponse<VerifyToken> = await axiosInstance.get('user', {
         headers: {
           access_token: authorization,
         },
