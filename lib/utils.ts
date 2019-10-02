@@ -10,5 +10,5 @@ export const isProduction: () => boolean = () => {
 };
 
 export const axiosInstance: AxiosInstance = Axios.create({ 
-  baseURL: isProduction() ? HANLIGHT_DEPLOY_URL : HANLIGHT_STAGING_URL,
+  baseURL: HANLIGHT_DEPLOY_URL
 });
