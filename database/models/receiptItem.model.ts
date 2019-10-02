@@ -11,8 +11,8 @@ import {
 } from 'sequelize-typescript';
 
 import Receipt from './receipt.model';
-import Store from './store.model';
-import StoreItem from './storeItem.model';
+import Shop from './shop.model';
+import ShopItem from './shopItem.model';
 
 @Table({
   timestamps: true,
@@ -24,20 +24,20 @@ export default class ReceiptItem extends Model<ReceiptItem> {
   @Column(DataType.INTEGER)
   public pk: number;
 
-  @ForeignKey(() => Store)
-  @AllowNull(true)
-  @Column(DataType.INTEGER)
-  public store_pk: number;
-
-  @ForeignKey(() => StoreItem)
-  @AllowNull(true)
-  @Column(DataType.INTEGER)
-  public storeItem_pk: number;
-
   @ForeignKey(() => Receipt)
   @AllowNull(false)
   @Column(DataType.INTEGER)
   public receipt_pk: number;
+
+  @ForeignKey(() => Shop)
+  @AllowNull(true)
+  @Column(DataType.INTEGER)
+  public shop_pk: number;
+
+  @ForeignKey(() => ShopItem)
+  @AllowNull(true)
+  @Column(DataType.INTEGER)
+  public shopItem_pk: number;
 
   @AllowNull(false)
   @Column(DataType.STRING)
@@ -51,11 +51,11 @@ export default class ReceiptItem extends Model<ReceiptItem> {
   @Column(DataType.INTEGER)
   public totalPrice: number;
     
-  @BelongsTo(() => Store)
-  public store: Store;
+  @BelongsTo(() => Shop)
+  public shop: Shop;
 
-  @BelongsTo(() => StoreItem)
-  public storeItem: StoreItem;
+  @BelongsTo(() => ShopItem)
+  public shopItem: ShopItem;
 
   @BelongsTo(() => Receipt, {
       onDelete: 'CASCADE',

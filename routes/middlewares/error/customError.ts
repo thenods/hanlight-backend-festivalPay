@@ -1,4 +1,4 @@
-import Errors from './errors';
+import Errors from './Errors';
 import { ErrorNames } from '@Lib/types';
 
 class CustomError {

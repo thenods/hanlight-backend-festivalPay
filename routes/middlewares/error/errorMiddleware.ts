@@ -1,6 +1,6 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 
-import Errors from './errors';
+import Errors from './Errors';
 
 interface IDefinedError {
   description: string;

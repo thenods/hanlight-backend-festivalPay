@@ -77,6 +77,11 @@ const Errors: { [key in ErrorNames]: IError } = {
       code: 404,
       message: '해당 댓글이 존재하지 않습니다.',
     },
+    Payment_Lack_Money: {
+      description: '결제 실패',
+      code: 412,
+      message: '잔액이 부족합니다.'
+    },
   };
   
 export default Errors;

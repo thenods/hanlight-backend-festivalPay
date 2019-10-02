@@ -29,6 +29,26 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
     if (authorization) {
       const response: AxiosResponse<VerifyToken> = await Axios.get(url + '/user', {
+
+import CustomError from "@Middleware/error/customError";
+
+import { axiosInstance } from "@Lib/utils";
+import { HanlightUserWithoutPK, HanlightUser } from "@Lib/types";
+
+interface VerifyToken {
+  data: {
+    user: HanlightUserWithoutPK;
+  };
+}
+
+type decodedToken = { pk: HanlightUser['pk'] };
+
+const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
+  const { authorization }: IncomingHttpHeaders = req.headers;
+
+  try {
+    if (authorization) {
+      const response: AxiosResponse<VerifyToken> = await axiosInstance.get('/user', {
         headers: {
           access_token: authorization,
         },
@@ -39,6 +59,12 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
       res.locals.user = {
         pk: decodedToken.pk,
         ...response.data.data,
+
+      const decodedToken: decodedToken = jwt.decode(authorization) as decodedToken;
+
+      res.locals.user = {
+        pk: decodedToken.pk,
+        ...response.data.data.user,
       };
 
       next();
